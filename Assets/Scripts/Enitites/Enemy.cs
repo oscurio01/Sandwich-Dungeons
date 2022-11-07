@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(EntityMovement))]
 public class Enemy : SpawnEntities
 {
+    public float speed;
     HealthSystem _health;
     bool onlyOnce = false;
     GameObject currentRoom;
@@ -44,6 +45,7 @@ public class Enemy : SpawnEntities
 
     private void ActionEnemy()
     {
+        entMovement.Movements(Vector2.zero, speed);
         
     }
 }

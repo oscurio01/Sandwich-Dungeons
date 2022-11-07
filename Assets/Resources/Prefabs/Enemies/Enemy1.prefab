@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee5eb82081858343b9594cedd6e99c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 1500
+  pushForce: 3
 --- !u!114 &4265412914167167898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagEntities: 
+  speed: 1
 --- !u!114 &5094905021838547858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,4 +365,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3b95e18821ead4fbd842321910ebef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  airResistance: 1
+  friction: 1
+  acceleration: 50

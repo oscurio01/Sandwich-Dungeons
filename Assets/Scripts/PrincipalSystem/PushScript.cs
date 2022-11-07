@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PushScript : CollisionBehaviour
 {
-    public float pushForce = 20000f;
+    public float pushForce = 2f;
 
     Vector3 mine;
     Vector3 notMine;
@@ -16,7 +16,7 @@ public class PushScript : CollisionBehaviour
             notMine = other.transform.position;
             mine = gameObject.transform.position;
 
-            other.GetComponent<Rigidbody>().AddForce((notMine - mine).normalized * pushForce);
+            other.GetComponent<Rigidbody>().AddForce((notMine - mine).normalized * pushForce * 1000);
         }
     }
 }

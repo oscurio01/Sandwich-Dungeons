@@ -200,6 +200,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6595879184286597526, guid: a3385b8a42c08ce4e8013ed51dd1a29c, type: 3}
+      propertyPath: speedDodge
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 6595879184286597530, guid: a3385b8a42c08ce4e8013ed51dd1a29c, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -243,6 +247,14 @@ PrefabInstance:
     - target: {fileID: 6595879184286597530, guid: a3385b8a42c08ce4e8013ed51dd1a29c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154697412459430235, guid: a3385b8a42c08ce4e8013ed51dd1a29c, type: 3}
+      propertyPath: friction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154697412459430235, guid: a3385b8a42c08ce4e8013ed51dd1a29c, type: 3}
+      propertyPath: acceleration
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9154697412459430235, guid: a3385b8a42c08ce4e8013ed51dd1a29c, type: 3}
       propertyPath: airResistance

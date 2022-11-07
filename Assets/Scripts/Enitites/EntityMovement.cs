@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EntityMovement : MonoBehaviour
 {
-    public float airResistance = 0f;
+    [Range(0,1)]public float friction = 0f;
+    public float acceleration;
     Rigidbody rb;
-
+    Vector3 accelerate;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -14,17 +15,24 @@ public class EntityMovement : MonoBehaviour
 
     public void Movements(Vector2 insert, float speed)
     {
-        rb.MovePosition(transform.position + new Vector3(insert.x, 0, insert.y).normalized * speed * Time.fixedDeltaTime);
+        //rb.MovePosition(transform.position + new Vector3(insert.x, 0, insert.y).normalized * speed * Time.fixedDeltaTime);
+        if (rb.velocity.magnitude == 0 && insert.magnitude <= 0) return;
 
-        //rb.velocity += new Vector3(insert.x, 0, insert.y).normalized * speed;
+        accelerate = CalculateVelocity(rb.velocity, new Vector3(insert.x, 0, insert.y).normalized, acceleration, speed, friction);
+
+        rb.velocity = accelerate;
 
     }
 
-    private void FixedUpdate()
+    public static Vector3 CalculateVelocity(Vector3 currentVelocity, Vector3 direction, float acceleration, float limitVelocity = Mathf.Infinity, float friction = 1f)
     {
-        if (rb.velocity.magnitude > 0)
-        {
-            rb.velocity -= rb.velocity.normalized * airResistance * Time.deltaTime;
-        }
+        Vector3 limVel = direction * limitVelocity;
+
+        return new Vector3(
+            Mathf.Lerp(currentVelocity.x, limVel.x, Mathf.Min((acceleration * friction * Time.deltaTime) / Mathf.Abs(currentVelocity.x - limVel.x), 1)),
+            Mathf.Lerp(currentVelocity.y, limVel.y, Mathf.Min((acceleration * friction * Time.deltaTime) / Mathf.Abs(currentVelocity.y - limVel.y), 1)),
+            Mathf.Lerp(currentVelocity.z, limVel.z, Mathf.Min((acceleration * friction * Time.deltaTime) / Mathf.Abs(currentVelocity.z - limVel.z), 1))
+            );
     }
+
 }

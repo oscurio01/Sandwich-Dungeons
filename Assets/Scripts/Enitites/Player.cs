@@ -41,8 +41,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(insert.magnitude > 0f)
-            entMovement.Movements(insert, speed);
+        entMovement.Movements(insert, speed);
     }
 
     #region Movements
@@ -50,7 +49,6 @@ public class Player : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         insert = context.performed ? context.ReadValue<Vector2>() : Vector2.zero;
-
     }
     #endregion
 
