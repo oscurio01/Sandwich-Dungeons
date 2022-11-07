@@ -4,20 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
+public enum RoomTypes
+{
+    Normal,
+    Special
+}
 
 public class RoomSystem : MonoBehaviour
 {
     public int Width;
     public int Height;
-    public int X;
-    public int Y;
+    //public int X;
+    //public int Y;
+    public Vector2Int _vector2;
 
-    public RoomSystem (int x, int y)
+    public RoomSystem (Vector2Int positionVector2)
     {
-        X = x;
-        Y = y;
+        _vector2 = positionVector2;
     }
+
+    public RoomTypes roomType;
 
     public int numEnemies;
 
@@ -29,6 +35,8 @@ public class RoomSystem : MonoBehaviour
 
     private bool updateDoors = false;
 
+    [SerializeField] private bool _specialRoom = false;
+
     private void Start()
     {
         if(RoomController.instance == null)
@@ -39,7 +47,9 @@ public class RoomSystem : MonoBehaviour
 
         doors = gameObject.GetComponentsInChildren<Door>();
 
-        RoomController.instance.RegisterRoom(this);
+        _specialRoom = roomType == RoomTypes.Special ? true : false;
+
+        //RoomController.instance.RegisterRoom(this);
     }
 
     private void Update()
@@ -59,12 +69,6 @@ public class RoomSystem : MonoBehaviour
             }
         }
 
-        if(name.Contains("End") && !updateDoors)
-        {
-            RemoveUnConnectedDoors();
-            updateDoors = true;
-        }
-
         //Debug.Log(Open);
     }
 
@@ -75,24 +79,52 @@ public class RoomSystem : MonoBehaviour
             switch (door.doortype)
             {
                 case Door.DoorType.top:
-                    if (GetTop() == null) door.gameObject.SetActive(false);
-                    else
-                        door.gameObject.SetActive(true);
+                    
+                    RoomSystem topRoom = GetTop();
+
+                    if (topRoom && _specialRoom)
+                    {
+                       
+                    }
+
+                    door.gameObject.SetActive(topRoom);
+
                     break;
                 case Door.DoorType.right:
-                    if (GetRight() == null) door.gameObject.SetActive(false);
-                    else
-                        door.gameObject.SetActive(true);
+
+                    RoomSystem rightRoom = GetRight();
+
+                    if (rightRoom)
+                    {
+                        
+                    }
+
+                    door.gameObject.SetActive(rightRoom);
+
                     break;
                 case Door.DoorType.left:
-                    if (GetLeft() == null) door.gameObject.SetActive(false);
-                    else
-                        door.gameObject.SetActive(true);
+
+                    RoomSystem leftRoom = GetLeft();
+
+                    if (leftRoom)
+                    {
+                        
+                    }
+
+                    door.gameObject.SetActive(leftRoom);
+
                     break;
                 case Door.DoorType.bottom:
-                    if (GetBottom() == null) door.gameObject.SetActive(false);
-                    else
-                        door.gameObject.SetActive(true);
+
+                    RoomSystem bottomRoom = GetBottom();
+
+                    if (bottomRoom)
+                    {
+                        
+                    }
+
+                    door.gameObject.SetActive(bottomRoom);
+
                     break;
                 default:
                     break;
@@ -104,36 +136,36 @@ public class RoomSystem : MonoBehaviour
 
     public RoomSystem GetTop()
     {
-        if (RoomController.instance.DoesRoomExist(X, Y + 1)) 
-            return RoomController.instance.FindRoom(X, Y + 1);
+        if (RoomController.instance.DoesRoomExist(new Vector2Int(_vector2.x, _vector2.y + 1))) 
+            return RoomController.instance.FindRoom(new Vector2Int(_vector2.x, _vector2.y + 1));
         else
             return null;
     }
     public RoomSystem GetRight()
     {
-        if (RoomController.instance.DoesRoomExist(X + 1, Y)) 
-            return RoomController.instance.FindRoom(X + 1, Y);
+        if (RoomController.instance.DoesRoomExist(new Vector2Int(_vector2.x + 1, _vector2.y))) 
+            return RoomController.instance.FindRoom(new Vector2Int(_vector2.x + 1, _vector2.y));
         else
             return null;
     }
     public RoomSystem GetLeft()
     {
-        if (RoomController.instance.DoesRoomExist(X - 1, Y)) 
-            return RoomController.instance.FindRoom(X - 1, Y);
+        if (RoomController.instance.DoesRoomExist(new Vector2Int(_vector2.x - 1, _vector2.y))) 
+            return RoomController.instance.FindRoom(new Vector2Int(_vector2.x - 1, _vector2.y));
         else
             return null;
     }
     public RoomSystem GetBottom()
     {
-        if (RoomController.instance.DoesRoomExist(X, Y - 1)) 
-            return RoomController.instance.FindRoom(X, Y - 1);
+        if (RoomController.instance.DoesRoomExist(new Vector2Int(_vector2.x, _vector2.y - 1))) 
+            return RoomController.instance.FindRoom(new Vector2Int(_vector2.x, _vector2.y - 1));
         else
             return null;
     }
 
     public Vector3 GetRoomCenter()
     {
-        return new Vector3(X * Width, 0, Y * Height);
+        return new Vector3(_vector2.x * Width, 0, _vector2.y * Height);
     }
 
     private void OnDrawGizmos()

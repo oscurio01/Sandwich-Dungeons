@@ -26,7 +26,7 @@ public class SpawnEntities : MonoBehaviour
 
         if (!ent.child.alive) DesSpawn(ent);
 
-        Debug.Log(ent.gameObject.name +" " + ent.alive + " " + ent.child.name + " " + ent.child.alive);
+        //Debug.Log(ent.gameObject.name +" " + ent.alive + " " + ent.child.name + " " + ent.child.alive);
 
         ent._gameObject.transform.position = ent.transform.position;
         ent._gameObject.transform.rotation = ent.transform.rotation;

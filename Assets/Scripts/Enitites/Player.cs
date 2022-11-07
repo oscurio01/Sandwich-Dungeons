@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(EntityMovement))]
 public class Player : MonoBehaviour
 {
     public Camera mainCamera;
     public float speed = 1.5f;
+    public float speedDodge = 5f;
+    public float immuneTime = 1f;
     public float turnSpeed;
     public float cooldownDodge;
 
@@ -16,12 +18,14 @@ public class Player : MonoBehaviour
     InputAction _Look;
     InputAction _Dodge;
     Rigidbody rb;
+    EntityMovement entMovement;
     Animator animator;
 
     void Awake()
     {
         if (!mainCamera) mainCamera = Camera.main;
         rb = GetComponent<Rigidbody>();
+        entMovement = GetComponent<EntityMovement>();
         animator = GetComponent<Animator>();
         _Look = GetComponent<PlayerInput>().actions.FindAction("Look");
         _Dodge = GetComponent<PlayerInput>().actions.FindAction("Dodge");
@@ -30,18 +34,18 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movements();
+
         Rotation();
         Dodge();
     }
 
-    #region Movements
-    void Movements()
+    private void FixedUpdate()
     {
-
-        rb.velocity = new Vector3(insert.x, 0, insert.y).normalized * speed;
-        
+        if(insert.magnitude > 0f)
+            entMovement.Movements(insert, speed);
     }
+
+    #region Movements
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -81,7 +85,16 @@ public class Player : MonoBehaviour
         if(_Dodge.activeControl.device is Keyboard || _Dodge.activeControl.device is Touchscreen)
         {
             privateCooldownDodge = cooldownDodge;
-            GetComponent<HealthSystem>().ImmuneActivate(true, 1f);
+            GetComponent<HealthSystem>().ImmuneActivate(true, immuneTime);
+            
+            if (insert.magnitude > 0) {
+                //rb.velocity += new Vector3(insert.x, 0, insert.y) * speedDodge;
+                rb.AddForce(new Vector3(insert.x, 0, insert.y) * speedDodge);
+            }
+            else
+            {
+                rb.AddForce(transform.forward * speedDodge);
+            }
             //animator.SetTrigger("Dodge");
         }
 

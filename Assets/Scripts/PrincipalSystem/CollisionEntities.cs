@@ -3,12 +3,17 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(ColorEntities))]
 public class CollisionEntities : MonoBehaviour
 {
-    public enum Team {White, BLACK }
+    public ColorEntities.Team team { get; private set; }
 
-    public Team team;
+    private void Start()
+    {
+
+
+        team = GetComponent<ColorEntities>().team;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {

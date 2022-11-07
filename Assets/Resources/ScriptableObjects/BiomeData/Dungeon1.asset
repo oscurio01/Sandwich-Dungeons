@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555aeb56b4049024ca7f6f582102e980, type: 3}
+  m_Name: Dungeon1
+  m_EditorClassIdentifier: 
+  StartRoom: {fileID: 2650682024562917084, guid: 95dd58be118add7429b574eb3d217680, type: 3}
+  prefabNormaRoom:
+    name: EnemyRooms
+    variants:
+    - {fileID: 7466711732864865926, guid: efc33ed072c84734a85aa64c47416049, type: 3}
+  prefabSpecialRoom:
+  - name: TreasureRoom
+    variants:
+    - {fileID: 2650682024562917084, guid: 63cd6a79df297df4ba7933ca2e5ac68b, type: 3}
+  prefabBossRoom:
+    name: BossRoom
+    variants:
+    - {fileID: 2094794064801258204, guid: 20b6179e59d94eb4db70c8e51aee1f96, type: 3}

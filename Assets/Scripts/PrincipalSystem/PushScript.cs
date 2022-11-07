@@ -11,7 +11,7 @@ public class PushScript : CollisionBehaviour
 
     public override void ExecuteCollision(GameObject other)
     {
-        if(other != gameObject)
+        if(other != gameObject && other.GetComponent<Rigidbody>())
         {
             notMine = other.transform.position;
             mine = gameObject.transform.position;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CollisionEntities))]
 public class Door : MonoBehaviour
 {
     public enum DoorType
@@ -31,7 +32,7 @@ public class Door : MonoBehaviour
 
             currentRoom = CurrentRoom.Instance.GetCurrentRoom();
 
-            if(other.GetComponent<CollisionEntities>().team != my_collision.team &&
+            if (other.GetComponent<CollisionEntities>().team != my_collision.team &&
             currentRoom.GetComponent<RoomSystem>().numEnemies <= 0)
             {
                 switch (doortype)
